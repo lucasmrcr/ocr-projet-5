@@ -21,13 +21,13 @@ describe('MeComponent', () => {
     };
     sessionServiceMock = {
       sessionInformation: {
-        token: 'token',
-        type: 'Bearer',
+        token: '',
+        type: '',
         id: 1,
-        username: 'johnDoe',
-        firstName: 'John',
-        lastName: 'Doe',
-        admin: true
+        username: '',
+        firstName: '',
+        lastName: '',
+        admin: false
       },
       logOut: jest.fn()
     };
