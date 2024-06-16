@@ -53,15 +53,16 @@ public class UserServiceTest {
     public void findUserWhenExists() {
         // Given
         LocalDateTime now = LocalDateTime.now();
-        User userToCreate = new User();
-        userToCreate.setId(1L);
-        userToCreate.setEmail("example@example.com");
-        userToCreate.setAdmin(false);
-        userToCreate.setPassword("password");
-        userToCreate.setLastName("Doe");
-        userToCreate.setFirstName("John");
-        userToCreate.setCreatedAt(now);
-        userToCreate.setUpdatedAt(now);
+        User userToCreate = User.builder()
+                .id(1L)
+                .email("example@example.com")
+                .admin(false)
+                .password("password")
+                .lastName("Doe")
+                .firstName("John")
+                .createdAt(now)
+                .updatedAt(now)
+                .build();
         when(userRepository.findById(1L)).thenReturn(Optional.of(userToCreate));
 
         // When

@@ -31,12 +31,13 @@ public class TeacherServiceTest {
     public void testFindAll() {
         // Given
         LocalDateTime now = LocalDateTime.now();
-        Teacher teacher = new Teacher();
-        teacher.setId(1L);
-        teacher.setFirstName("John");
-        teacher.setLastName("Doe");
-        teacher.setCreatedAt(now);
-        teacher.setUpdatedAt(now);
+        Teacher teacher = Teacher.builder()
+                .id(1L)
+                .firstName("John")
+                .lastName("Doe")
+                .createdAt(now)
+                .updatedAt(now)
+                .build();
 
         List<Teacher> teachersToLoad = new ArrayList<>();
         teachersToLoad.add(teacher);
