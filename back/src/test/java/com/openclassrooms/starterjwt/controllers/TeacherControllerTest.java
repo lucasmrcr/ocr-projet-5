@@ -34,7 +34,7 @@ public class TeacherControllerTest extends AsAdminMvcTestFramework {
     }
 
     @Test
-    public void findByIdInvalidInteger() throws Exception {
+    public void testFindByIdInvalidInteger() throws Exception {
         // Given
         // When
         mockMvc.perform(get("/api/teacher/invalid")
@@ -44,7 +44,7 @@ public class TeacherControllerTest extends AsAdminMvcTestFramework {
     }
 
     @Test
-    public void findByIdNotFound() throws Exception {
+    public void testFindByIdNotFound() throws Exception {
         // Given
         // When
         mockMvc.perform(get("/api/teacher/2")
@@ -54,7 +54,7 @@ public class TeacherControllerTest extends AsAdminMvcTestFramework {
     }
 
     @Test
-    public void findByIdValid() throws Exception {
+    public void testFindByIdValid() throws Exception {
         // Given
         // When
         mockMvc.perform(get("/api/teacher/1")
