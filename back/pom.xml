@@ -120,7 +120,9 @@
 				<version>0.8.5</version>
 				<configuration>
 					<excludes>
-						<exclude>**/dto/*</exclude>
+						<exclude>com/openclassrooms/starterjwt/dto/*</exclude>
+						<exclude>com/openclassrooms/starterjwt/payload/**/*</exclude>
+						<exclude>com/openclassrooms/starterjwt/models/*</exclude>
 					</excludes>
 				</configuration>
 				<executions>
