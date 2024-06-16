@@ -6,6 +6,8 @@ import {expect} from '@jest/globals';
 import {MeComponent} from "./me.component";
 import {SessionService} from "../../services/session.service";
 import {UserService} from "../../services/user.service";
+import {MatCardModule} from "@angular/material/card";
+import {MatIconModule} from "@angular/material/icon";
 
 describe('MeComponent', () => {
   let component: MeComponent;
@@ -46,6 +48,10 @@ describe('MeComponent', () => {
         {provide: SessionService, useValue: sessionServiceMock},
         {provide: MatSnackBar, useValue: matSnackBarMock},
         {provide: UserService, useValue: userServiceMock}
+      ],
+      imports: [
+        MatCardModule,
+        MatIconModule
       ]
     }).compileComponents();
 
