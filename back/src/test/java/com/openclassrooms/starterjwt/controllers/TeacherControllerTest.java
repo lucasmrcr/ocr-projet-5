@@ -45,9 +45,7 @@ public class TeacherControllerTest extends YogaAppMvcSpringBootTestFramework {
     @Test
     public void testFindByIdValid() throws Exception {
         // Given
-        Teacher teacher = new Teacher();
-        teacher.setFirstName("John");
-        teacher.setLastName("Doe");
+        Teacher teacher = new Teacher(null, "John", "Doe", null, null);
         teacherRepository.save(teacher);
 
         // When
