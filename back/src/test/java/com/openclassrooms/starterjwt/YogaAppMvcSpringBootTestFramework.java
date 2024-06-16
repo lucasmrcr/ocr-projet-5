@@ -5,7 +5,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.test.web.servlet.MockMvc;
 
 @AutoConfigureMockMvc
-public class YogaAppMvcTestFramework extends YogaAppTestFramework {
+public class YogaAppMvcSpringBootTestFramework extends YogaAppSpringBootTestFramework {
 
     @Autowired
     protected MockMvc mockMvc;

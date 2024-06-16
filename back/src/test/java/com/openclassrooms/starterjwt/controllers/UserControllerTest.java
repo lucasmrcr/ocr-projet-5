@@ -1,6 +1,6 @@
 package com.openclassrooms.starterjwt.controllers;
 
-import com.openclassrooms.starterjwt.YogaAppMvcTestFramework;
+import com.openclassrooms.starterjwt.YogaAppMvcSpringBootTestFramework;
 import com.openclassrooms.starterjwt.models.User;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -11,7 +11,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class UserControllerTest extends YogaAppMvcTestFramework {
+public class UserControllerTest extends YogaAppMvcSpringBootTestFramework {
 
     @AfterEach
     public void cleanUp() {

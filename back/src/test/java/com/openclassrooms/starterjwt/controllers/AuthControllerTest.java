@@ -1,6 +1,6 @@
 package com.openclassrooms.starterjwt.controllers;
 
-import com.openclassrooms.starterjwt.YogaAppMvcTestFramework;
+import com.openclassrooms.starterjwt.YogaAppMvcSpringBootTestFramework;
 import com.openclassrooms.starterjwt.models.User;
 import com.openclassrooms.starterjwt.payload.request.LoginRequest;
 import com.openclassrooms.starterjwt.payload.request.SignupRequest;
@@ -12,7 +12,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class AuthControllerTest extends YogaAppMvcTestFramework {
+public class AuthControllerTest extends YogaAppMvcSpringBootTestFramework {
 
     @AfterEach
     public void cleanUp() {

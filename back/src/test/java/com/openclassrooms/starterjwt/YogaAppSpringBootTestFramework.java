@@ -17,7 +17,7 @@ import org.springframework.test.context.ActiveProfiles;
 @SpringBootTest
 @ActiveProfiles("test")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
-public class YogaAppTestFramework {
+public class YogaAppSpringBootTestFramework {
 
     @Getter
     private final ObjectMapper objectMapper = new ObjectMapper();

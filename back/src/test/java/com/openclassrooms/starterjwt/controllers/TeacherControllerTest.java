@@ -1,6 +1,6 @@
 package com.openclassrooms.starterjwt.controllers;
 
-import com.openclassrooms.starterjwt.YogaAppMvcTestFramework;
+import com.openclassrooms.starterjwt.YogaAppMvcSpringBootTestFramework;
 import com.openclassrooms.starterjwt.models.Teacher;
 import com.openclassrooms.starterjwt.repository.TeacherRepository;
 import org.junit.jupiter.api.AfterEach;
@@ -12,7 +12,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class TeacherControllerTest extends YogaAppMvcTestFramework {
+public class TeacherControllerTest extends YogaAppMvcSpringBootTestFramework {
 
     @Autowired
     private TeacherRepository teacherRepository;

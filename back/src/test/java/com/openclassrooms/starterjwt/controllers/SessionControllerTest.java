@@ -1,7 +1,7 @@
 package com.openclassrooms.starterjwt.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.openclassrooms.starterjwt.YogaAppMvcTestFramework;
+import com.openclassrooms.starterjwt.YogaAppMvcSpringBootTestFramework;
 import com.openclassrooms.starterjwt.dto.SessionDto;
 import com.openclassrooms.starterjwt.models.Session;
 import com.openclassrooms.starterjwt.models.Teacher;
@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class SessionControllerTest extends YogaAppMvcTestFramework {
+public class SessionControllerTest extends YogaAppMvcSpringBootTestFramework {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
