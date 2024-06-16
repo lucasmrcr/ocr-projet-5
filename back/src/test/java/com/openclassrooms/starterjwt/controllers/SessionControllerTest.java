@@ -12,6 +12,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -273,12 +274,16 @@ public class SessionControllerTest extends YogaAppMvcSpringBootTestFramework {
     @Test
     public void testParticipateSessionValid() throws Exception {
         // Given
-        User user = new User();
-        user.setFirstName("User");
-        user.setLastName("1");
-        user.setEmail("user@example.com");
-        user.setPassword("password");
-        user.setAdmin(false);
+        User user = new User(
+                null,
+                "user@example.com",
+                "1",
+                "User",
+                "password",
+                false,
+                null,
+                null
+        );
         user = getUserRepository().save(user);
 
 
@@ -312,10 +317,11 @@ public class SessionControllerTest extends YogaAppMvcSpringBootTestFramework {
     @Test
     public void testNoLongerParticipateSessionInvalidIntegerUser() throws Exception {
         // Given
-        Session session = new Session();
-        session.setName("Session 1");
-        session.setDate(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000));
-        session.setDescription("Description 1");
+        Session session = Session.builder()
+                .name("Session 1")
+                .date(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000))
+                .description("Description 1")
+                .build();
         session = sessionRepository.save(session);
 
         //When
@@ -354,19 +360,25 @@ public class SessionControllerTest extends YogaAppMvcSpringBootTestFramework {
     @Test
     public void testNoLongerParticipateSessionValid() throws Exception {
         // Given
-        User user = new User();
-        user.setFirstName("User");
-        user.setLastName("1");
-        user.setEmail("user@example.com");
-        user.setPassword(getPasswordEncoder().encode("password"));
-        user.setAdmin(false);
+        User user = new User(
+                "user@example.com",
+                "1",
+                "User",
+                "password",
+                false
+        );
         user = getUserRepository().save(user);
 
-        Session session = new Session();
-        session.setName("Session 1");
-        session.setDate(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000));
-        session.setDescription("Description 1");
-        session.setUsers(new ArrayList<>());
+        Session session = new Session(
+                null,
+                "Session 1",
+                new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000),
+                "Description 1",
+                null,
+                new ArrayList<>(),
+                LocalDateTime.now(),
+                LocalDateTime.now()
+        );
         session.getUsers().add(user);
         session = sessionRepository.save(session);
 
