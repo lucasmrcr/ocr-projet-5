@@ -1,27 +1,34 @@
 package com.openclassrooms.starterjwt;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.openclassrooms.starterjwt.models.User;
 import com.openclassrooms.starterjwt.repository.UserRepository;
 import com.openclassrooms.starterjwt.security.jwt.JwtUtils;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
 @ActiveProfiles("test")
-public class AsAdminTestFramework {
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
+public class YogaAppTestFramework {
 
-    @Autowired
-    protected UserRepository userRepository;
+    @Getter
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
+    @Getter
     @Autowired
-    protected PasswordEncoder passwordEncoder;
+    private UserRepository userRepository;
+
+    @Getter
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -29,27 +36,26 @@ public class AsAdminTestFramework {
     @Autowired
     private JwtUtils jwtUtils;
 
-    private String adminAccessToken;
-
-    @BeforeEach
-    public void setUp() {
-        User admin = new User();
-        admin.setEmail("admin@example.com");
-        admin.setLastName("Doe");
-        admin.setFirstName("John");
-        admin.setAdmin(true);
-        admin.setPassword(passwordEncoder.encode("password"));
-        userRepository.save(admin);
-        adminAccessToken = authenticate(admin.getEmail(), "password");
-    }
-
-    @AfterEach
-    public void tearDown() {
-        userRepository.deleteAll();
-    }
+    private User admin;
 
     protected String getAdminAccessToken() {
-        return adminAccessToken;
+        if (admin == null) {
+
+            if (userRepository.findByEmail("admin@example.com").isPresent()) {
+                admin = userRepository.findByEmail("admin@example.com").get();
+            } else {
+                admin = new User();
+                admin.setEmail("admin@example.com");
+                admin.setLastName("Doe");
+                admin.setFirstName("John");
+                admin.setAdmin(true);
+                admin.setPassword(passwordEncoder.encode("password"));
+
+                admin = userRepository.save(admin);
+            }
+        }
+
+        return authenticate(admin.getEmail(), "password");
     }
 
     protected String authenticate(String email, String password) {

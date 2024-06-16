@@ -1,8 +1,9 @@
 package com.openclassrooms.starterjwt.controllers;
 
-import com.openclassrooms.starterjwt.AsAdminMvcTestFramework;
+import com.openclassrooms.starterjwt.YogaAppMvcTestFramework;
 import com.openclassrooms.starterjwt.models.Teacher;
 import com.openclassrooms.starterjwt.repository.TeacherRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -11,10 +12,15 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class TeacherControllerTest extends AsAdminMvcTestFramework {
+public class TeacherControllerTest extends YogaAppMvcTestFramework {
 
     @Autowired
     private TeacherRepository teacherRepository;
+
+    @AfterEach
+    public void cleanUp() {
+        teacherRepository.deleteAll();
+    }
 
     @Test
     public void testFindByIdInvalidInteger() throws Exception {
@@ -49,7 +55,6 @@ public class TeacherControllerTest extends AsAdminMvcTestFramework {
                         .header("Authorization", "Bearer " + getAdminAccessToken()))
                 // Then
                 .andExpect(status().isOk());
-        teacherRepository.deleteAll();
     }
 
     @Test
@@ -68,6 +73,5 @@ public class TeacherControllerTest extends AsAdminMvcTestFramework {
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].firstName").value("John"))
                 .andExpect(jsonPath("$[0].lastName").value("Doe"));
-        teacherRepository.deleteAll();
     }
 }

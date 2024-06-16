@@ -1,7 +1,8 @@
 package com.openclassrooms.starterjwt.controllers;
 
-import com.openclassrooms.starterjwt.AsAdminMvcTestFramework;
+import com.openclassrooms.starterjwt.YogaAppMvcTestFramework;
 import com.openclassrooms.starterjwt.models.User;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -10,7 +11,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class UserControllerTest extends AsAdminMvcTestFramework {
+public class UserControllerTest extends YogaAppMvcTestFramework {
+
+    @AfterEach
+    public void cleanUp() {
+        getUserRepository().deleteAll();
+    }
 
     @Test
     public void testFindByIdNotExistingUser() throws Exception {
@@ -31,7 +37,6 @@ public class UserControllerTest extends AsAdminMvcTestFramework {
                         .header("Authorization", "Bearer " + getAdminAccessToken()))
                 //Then
                 .andExpect(status().isBadRequest());
-
     }
 
     @Test
@@ -42,7 +47,7 @@ public class UserControllerTest extends AsAdminMvcTestFramework {
         user.setLastName("Doe");
         user.setEmail("example@example.com");
         user.setAdmin(false);
-        userRepository.save(user);
+        user = getUserRepository().save(user);
 
         // When
         mockMvc.perform(get("/api/user/" + user.getId())
@@ -86,7 +91,7 @@ public class UserControllerTest extends AsAdminMvcTestFramework {
         user.setLastName("Doe");
         user.setEmail("example@example.com");
         user.setAdmin(false);
-        userRepository.save(user);
+        getUserRepository().save(user);
 
         // When
         mockMvc.perform(delete("/api/user/" + user.getId())
@@ -103,8 +108,9 @@ public class UserControllerTest extends AsAdminMvcTestFramework {
         user.setLastName("Doe");
         user.setEmail("example@example.com");
         user.setAdmin(false);
-        user.setPassword(passwordEncoder.encode("password"));
-        userRepository.save(user);
+        user.setPassword(getPasswordEncoder().encode("password"));
+        getUserRepository().save(user);
+
         String token = authenticate(user.getEmail(), "password");
 
         // When
@@ -112,6 +118,6 @@ public class UserControllerTest extends AsAdminMvcTestFramework {
                         .header("Authorization", "Bearer " + token))
                 //Then
                 .andExpect(status().isOk());
-        assertFalse(userRepository.findById(user.getId()).isPresent());
+        assertFalse(getUserRepository().findById(user.getId()).isPresent());
     }
 }

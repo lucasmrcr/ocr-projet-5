@@ -1,60 +1,35 @@
 package com.openclassrooms.starterjwt.controllers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.openclassrooms.starterjwt.YogaAppMvcTestFramework;
 import com.openclassrooms.starterjwt.models.User;
 import com.openclassrooms.starterjwt.payload.request.LoginRequest;
 import com.openclassrooms.starterjwt.payload.request.SignupRequest;
-import com.openclassrooms.starterjwt.repository.UserRepository;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
-@ActiveProfiles("test")
-@AutoConfigureMockMvc
-public class AuthControllerTest {
-
-    private final ObjectMapper objectMapper = new ObjectMapper();
-
-    @Autowired
-    private MockMvc mockMvc;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @BeforeEach
-    public void setUp() {
-        User user = new User();
-        user.setEmail("example@example.com");
-        user.setPassword(passwordEncoder.encode("password"));
-        user.setAdmin(false);
-        user.setFirstName("John");
-        user.setLastName("Doe");
-        userRepository.save(user);
-    }
+public class AuthControllerTest extends YogaAppMvcTestFramework {
 
     @AfterEach
-    public void tearDown() {
-        userRepository.deleteAll();
+    public void cleanUp() {
+        getUserRepository().deleteAll();
     }
 
     @Test
     public void testAuthenticateCorrectUser() throws Exception {
         // Given
+        User user = new User();
+        user.setEmail("example@example.com");
+        user.setPassword(getPasswordEncoder().encode("password"));
+        user.setAdmin(false);
+        user.setFirstName("John");
+        user.setLastName("Doe");
+        getUserRepository().save(user);
+
         LoginRequest loginRequest = new LoginRequest();
         loginRequest.setEmail("example@example.com");
         loginRequest.setPassword("password");
@@ -62,7 +37,7 @@ public class AuthControllerTest {
         // When
         mockMvc.perform(post("/api/auth/login")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(loginRequest)))
+                        .content(getObjectMapper().writeValueAsString(loginRequest)))
 
                 // Then
                 .andExpect(status().isOk())
@@ -82,7 +57,7 @@ public class AuthControllerTest {
         // When
         mockMvc.perform(post("/api/auth/login")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(loginRequest)))
+                        .content(getObjectMapper().writeValueAsString(loginRequest)))
 
                 // Then
                 .andExpect(status().isBadRequest());
@@ -100,7 +75,7 @@ public class AuthControllerTest {
         // When
         mockMvc.perform(post("/api/auth/register")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(signupRequest)))
+                        .content(getObjectMapper().writeValueAsString(signupRequest)))
 
                 // Then
                 .andExpect(status().isOk())
@@ -110,6 +85,14 @@ public class AuthControllerTest {
     @Test
     public void testRegisterExistingUser() throws Exception {
         // Given
+        User user = new User();
+        user.setEmail("example@example.com");
+        user.setPassword(getPasswordEncoder().encode("password"));
+        user.setAdmin(false);
+        user.setFirstName("John");
+        user.setLastName("Doe");
+        getUserRepository().save(user);
+
         SignupRequest signupRequest = new SignupRequest();
         signupRequest.setPassword("password");
         signupRequest.setEmail("example@example.com");
@@ -119,7 +102,7 @@ public class AuthControllerTest {
         // When
         mockMvc.perform(post("/api/auth/register")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(signupRequest)))
+                        .content(getObjectMapper().writeValueAsString(signupRequest)))
 
                 // Then
                 .andExpect(status().isBadRequest())
