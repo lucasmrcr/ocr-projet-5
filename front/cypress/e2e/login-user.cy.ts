@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-describe('Login', () => {
+describe('login user', () => {
   it('should login successfully', () => {
     cy.visit('/login');
 
