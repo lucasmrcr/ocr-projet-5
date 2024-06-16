@@ -33,7 +33,7 @@ public class UserServiceTest {
         // When
         userService.delete(1L);
 
-        // Assert
+        // Then
         verify(userRepository).deleteById(1L);
     }
 
@@ -43,7 +43,7 @@ public class UserServiceTest {
         // When
         User user = userService.findById(1L);
 
-        // Assert
+        // Then
         verify(userRepository).findById(1L);
         assertNull(user);
     }
@@ -59,7 +59,7 @@ public class UserServiceTest {
         // When
         User user = userService.findById(1L);
 
-        // Assert
+        // Then
         verify(userRepository).findById(1L);
         assertNotNull(user);
         assertEquals("example@example.com", user.getEmail());
